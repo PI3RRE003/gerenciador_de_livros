@@ -1,17 +1,9 @@
 <?php
 
-require 'dados.php';
+$livro = $database->query(
+    "select * from livros where id = :id",
+    Livro::class,
+    ['id' => $_GET['id']]
+)->fetch();
 
-$id = $_REQUEST['id'];
-
-$filtrado = array_filter($livros, function ($l) use ($id) {
-
-    return $l['id'] == $id;
-});
-
-$livro = array_pop($filtrado);
-
-
-$view = 'livro';
-
-require 'views/template/app.php';
+view('livro', compact('livro'));
